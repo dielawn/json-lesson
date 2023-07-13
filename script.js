@@ -60,3 +60,97 @@ function populateHeroes(obj) {
 populate()
 
 
+
+function displayName() {
+    const txtElement = document.createElement('p')
+    const newestObj = JSON.parse('{"name": "John", "age":30, "birth":"1986-12-14", "city":"New York"}')
+    const text = '{"name": "John", "age":30, "birth":"1986-12-14", "city":"New York"}'
+
+    const obj = JSON.parse(text)
+    obj.birth = new Date(obj.birth)    
+
+    const nameTxt = `${obj.name}, ${obj.birth}`
+    txtElement.textContent = nameTxt
+
+    containerDiv.appendChild(txtElement)
+
+}
+
+displayName()
+
+const reviverFunction = () => {
+    
+    const text = '{"name":"John", "birth":"1986-12-14", "city":"New York"}'
+    const obj = JSON.parse(text, function (key, value) { 
+    if (key == "birth") {        
+        return new Date(value)
+    } else {
+        return value
+    }      
+    })
+}
+
+
+
+
+
+const displayAutoManuf = () => {
+    const text = '["Ford", "BMW", "Audi", "Fiat"]'
+    const myArr = JSON.parse(text)
+    for (const arr of myArr) {
+        const textItem = document.createElement('p')
+        textItem.textContent = arr
+        containerDiv.appendChild(textItem)
+    }    
+}
+
+
+
+displayAutoManuf()
+
+
+function stringifyObj() {
+    const obj = {name: "John", age: 30, city: "New York"}
+    const myJSON = JSON.stringify(obj)
+    console.log(obj)
+    console.log(myJSON)
+    localStorage.setItem("testObjJSON", myJSON)
+}
+
+stringifyObj()
+
+function stringifyArr() {
+    const arr = ["John", "Peter", "Sally", "Jane"]
+    const myJSON = JSON.stringify(arr)
+    console.log(arr)
+    console.log(myJSON)
+    localStorage.setItem("testArrJSON", myJSON)
+}
+
+stringifyArr()
+
+function checkStorageObj() {
+    let text = localStorage.getItem("testObjJSON")
+    let obj = JSON.parse(text)
+    const textElem = document.createElement('p')
+    textElem.textContent = `${obj.name} ${obj.age} ${obj.city}`
+    containerDiv.appendChild(textElem)
+    
+}
+
+checkStorageObj()
+
+
+function checkStorageArr() {
+    let text = localStorage.getItem("testArrJSON")
+    let arr = JSON.parse(text)
+    for (const item of arr) {
+        const textElem = document.createElement('p')
+        textElem.innerText = item
+        containerDiv.appendChild(textElem)
+    }
+    
+}
+
+checkStorageArr()
+
